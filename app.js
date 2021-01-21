@@ -85,6 +85,7 @@ app.get("/compose" , function(req , res){
   res.render("compose");
 });
 
+
 app.post("/compose" , function(req , res){
   const post = {
     post_title : req.body.post_title,
@@ -96,8 +97,8 @@ app.post("/compose" , function(req , res){
   posts.push(post);
 
   res.redirect("/");
-})
+});
 
 app.listen(process.env.PORT || 3000 , function() {
-  console.log("Server started on port 3000");
+  // console.log("Server started on port 3000");
 });
