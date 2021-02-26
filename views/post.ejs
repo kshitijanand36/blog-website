@@ -4,4 +4,10 @@
 
 <p> <%= curr_post.content %> </p>
 
+
+<form class="" action="/delete" method="post">
+  <button type="submit" class="btn btn-primary" name = "delete_btn" value= "<%=curr_post._id %>">Delete</button>
+
+</form>
+
 <%- include("partials/footer") %>

@@ -114,6 +114,15 @@ app.post("/compose" , function(req , res){
 
 });
 
+app.post("/delete" , function(req , res){
+
+  const req_id = req.body.delete_btn;
+
+  Post.deleteOne({_id : req_id } , function(err){});
+
+  res.redirect("/");
+})
+
 app.listen(process.env.PORT || 3000 , function() {
   console.log("Server started on port 3000");
 });
