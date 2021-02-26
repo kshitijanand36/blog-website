@@ -18,34 +18,65 @@ const contactContent = "Scelerisque eleifend donec pretium vulputate sapien. Rho
 
 const app = express();
 
-posts = [];
 
 app.set('view engine', 'ejs');
 
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
 
+const mongoose = require('mongoose');
 
-app.get("/", function(req , res){
-  res.render("home" , {content : posts , starting_content : homeStartingContent });
+mongoose.connect("mongodb+srv://admin-kshitij:Test123@cluster0.cdg7o.mongodb.net/blogDB?retryWrites=true&w=majority", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
 });
 
-app.get("/blogs/:topic" , function(req , res){
+const postSchema = {
+  title : String,
+  content : String
+}
 
-  var reqd = _.lowerCase( req.params.topic);
+const Post = mongoose.model("Post" , postSchema);
 
-  console.log(reqd);
-  for(let i = 0 ;  i< posts.length ; i++){
-    console.log(_.lowerCase(posts[i].post_title));
-    if(_.lowerCase(posts[i].post_title) == reqd){
-      res.render("post" , {post_title :posts[i].post_title , post_content : posts[i].post_body })
+
+
+app.get("/", function(req , res){
+
+  Post.find({} , function(err , posts){
+
+    if(err){
+      console.log(err);
     }
-  }
 
+    else{
 
+      res.render("home" , {content : posts , starting_content : homeStartingContent});
 
-  res.render("error");
-})
+    }
+  })
+
+});
+
+app.get("/blogs/:postId" , function(req , res){
+
+    var reqd = req.params.postId
+
+    Post.findOne({_id : reqd} , function(err , results){
+
+      if(err){
+        res.render("error");
+        console.log(err);
+
+      }
+
+      else{
+
+        res.render("post",{curr_post : results});
+
+      }
+    })
+
+});
 
 app.get("/home" , function(req , res){
 
@@ -69,18 +100,20 @@ app.get("/compose" , function(req , res){
 
 
 app.post("/compose" , function(req , res){
-  const post = {
-    post_title : req.body.post_title,
-    post_body : req.body.post_body
-  }
+  const newpost = new Post({
+    title : req.body.post_title,
+    content : req.body.post_body
+  })
 
-  // console.log(post);
+  newpost.save(function(err){
+     if(!err){
+       res.redirect("/");
 
-  posts.push(post);
+     }
+  });
 
-  res.redirect("/");
 });
 
 app.listen(process.env.PORT || 3000 , function() {
-  // console.log("Server started on port 3000");
+  console.log("Server started on port 3000");
 });

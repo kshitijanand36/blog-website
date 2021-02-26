@@ -11,8 +11,8 @@
 <% content.forEach(function(element){ %>
   <%# console.log(element.post_title);  %>
    <%# console.log(element.post_body);  %>
-  <h2><%= element.post_title%></h2>
-  <p><%= element.post_body.substring(0 , 100) + " ..." %> <a href="/blogs/<%=element.post_title%>" >Read more</a> </p>
+  <h2><%= element.title%></h2>
+  <p><%= element.content.substring(0 , 100) + " ..." %> <a href="/blogs/<%=element._id%>">Read more</a> </p>
 
  <%}) %>
 
