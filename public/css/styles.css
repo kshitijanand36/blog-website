@@ -28,6 +28,13 @@
 	background-color: #1abc9c;
 }
 
+#btnSearch{
+    display: inline-block;
+    /* vertical-align: top; */
+
+    /* margin-left: : 10%; */
+}
+
 .footer p {
 	margin-top: 25px;
 	font-size: 12px;

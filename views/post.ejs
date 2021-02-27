@@ -5,9 +5,15 @@
 <p> <%= curr_post.content %> </p>
 
 
-<form class="" action="/delete" method="post">
-  <button type="submit" class="btn btn-primary" name = "delete_btn" value= "<%=curr_post._id %>">Delete</button>
 
-</form>
+    <form class="" id="btnSearch"  action="/delete" method="post">
+      <button type="submit"  class="btn btn-danger" name = "delete_btn" value= "<%=curr_post._id %>">Delete</button>
+    </form>
+
+    <a href="/update/<%=curr_post._id%>">
+      <button type="button" id="btnClear"  class="btn btn-success" name="button">
+        Update</button>
+    </a>
+
 
 <%- include("partials/footer") %>

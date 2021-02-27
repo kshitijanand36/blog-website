@@ -98,6 +98,38 @@ app.get("/compose" , function(req , res){
   res.render("compose");
 });
 
+app.get("/update/:post_id" , function(req  ,res){
+
+  const curr_id = req.params.post_id;
+
+  Post.findOne({_id : curr_id} , function(err , result){
+
+    if(!err){
+
+      res.render("update" , {curr_post : result});
+    }
+  })
+});
+
+app.post("/update/:post_id" , function(req , res){
+
+  const curr_id = req.params.post_id;
+  const new_title = req.body.post_title;
+  const new_body = req.body.post_body;
+
+  console.log(new_title);
+
+  console.log(new_body);
+
+  Post.updateOne({_id : curr_id} , {title : new_title , content : new_body} , function(err){
+    if(err){
+      console.log(err);
+    }
+  });
+
+  res.redirect("/")
+})
+
 
 app.post("/compose" , function(req , res){
   const newpost = new Post({
